@@ -1,0 +1,2 @@
+{% load static %}
+{{all_data|safe}}
