@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電影推薦自動化系統</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+    <h1>Movie Recommendations</h1>
+    <nav>
+    <ul>
+        <li><a href="#">首頁</a></li>
+        <li><a href="#">搜尋</a></li>
+        <li><a href="#">關於我們</a></li>
+        <li><a href="#">會員專區</a></li>
+    </ul>
+    </nav>
+    </header>
+    <main>
+    <section>
+    <p>電影推薦前10排名 : </p>
+    <section>
+    </main>
+    <footer>
+        <p>Copyright 2024 Movie Recommendations.</p>
+    </footer>
+</body>
+</html>
