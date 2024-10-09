@@ -14,6 +14,8 @@ import datetime
 import base64
 import mysql.connector
 from django.core.cache import cache
+# from myapp.call_dataframe import call_dataframe
+from myapp.html_show import html_show
 show_data='暫無資料'
 db_config = {
     'host': 'u3r5w4ayhxzdrw87.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',         # 資料庫伺服器地址 (可以是 IP 或域名)
@@ -21,32 +23,32 @@ db_config = {
     'password': 'rrdv8ehsrp8pdzqn', # 資料庫密碼
     'database': 'xltc236odfo1enc9',  # 要使用的資料庫名稱
 }
-def initialise(request):
-    global show_data
-    if request.method !='POST':
-        form_action_url = reverse('initialise')
-        csrf_token = csrf.get_token(request)
-        res=f''' <h>click to start</h>
-<form action="{form_action_url}"  method="post">
-     <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
-    <input type="submit" name="start_crawling" value="yes">
-</form>'''
-        return render(request,'initialise.html',{'res': res})
-    else:
-        db_config = {
-    'host': 'u3r5w4ayhxzdrw87.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',         # 資料庫伺服器地址 (可以是 IP 或域名)
-    'user': 'dhv81sqnky35oozt',     # 資料庫使用者名稱
-    'password': 'rrdv8ehsrp8pdzqn', # 資料庫密碼
-    'database': 'xltc236odfo1enc9',  # 要使用的資料庫名稱
-}
-        connection = mysql.connector.connect(**db_config)
-        cursor=connection.cursor()
-        cursor.execute('SELECT * FROM movies_html ORDER BY id DESC LIMIT 1')
-        result=cursor.fetchall()
-        res=result[0][1]
-        final_data=pd.read_html(res)[0]
-        show_data=final_data
-        return render(request,'initialise.html', {'res': res})
+# def initialise(request):
+#     global show_data
+#     if request.method !='POST':
+#         form_action_url = reverse('initialise')
+#         csrf_token = csrf.get_token(request)
+#         res=f''' <h>click to start</h>
+# <form action="{form_action_url}"  method="post">
+#      <input type="hidden" name="csrfmiddlewaretoken" value="{csrf_token}">
+#     <input type="submit" name="start_crawling" value="yes">
+# </form>'''
+#         return render(request,'initialise.html',{'res': res})
+#     else:
+#         db_config = {
+#     'host': 'u3r5w4ayhxzdrw87.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',         # 資料庫伺服器地址 (可以是 IP 或域名)
+#     'user': 'dhv81sqnky35oozt',     # 資料庫使用者名稱
+#     'password': 'rrdv8ehsrp8pdzqn', # 資料庫密碼
+#     'database': 'xltc236odfo1enc9',  # 要使用的資料庫名稱
+# }
+#         connection = mysql.connector.connect(**db_config)
+#         cursor=connection.cursor()
+#         cursor.execute('SELECT * FROM movies_html ORDER BY id DESC LIMIT 1')
+#         result=cursor.fetchall()
+#         res=result[0][1]
+#         final_data=pd.read_html(res)[0]
+#         show_data=final_data
+#         return render(request,'initialise.html', {'res': res})
 def Taiwan_movies_all(request):
     global show_data , db_config
     if request.method !='POST':
@@ -54,20 +56,16 @@ def Taiwan_movies_all(request):
         form_action_url = reverse('Taiwan_movies_all')
         final_data = cache.get('dataframe')
         if final_data is not None:
-            from myapp.html_show import html_show
             res=html_show(final_data)
             return render(request,'Taiwan_movie_all.html', {'res': res})
-        connection = mysql.connector.connect(**db_config)
-        cursor=connection.cursor()
-        cursor.execute('SELECT * FROM movies_html ORDER BY id DESC LIMIT 1')
-        result=cursor.fetchall()
-        res=result[0][1]
-        final_data=pd.read_html(res)[0]
-        final_data['日期'] = pd.to_datetime(final_data['日期'])
+        from myapp.call_dataframe import call_dataframe ,week_ranking
+        final_data=week_ranking(call_dataframe())
         cache.set('dataframe',final_data, timeout=60*30)
-        from myapp.html_show import html_show
         res=html_show(final_data)
-        return render(request,'Taiwan_movie_all.html', {'res': res})
+        number_1=final_data['宣傳照'].iloc[0]
+        description=final_data['簡介'].iloc[0]
+        description=description[:len(description)//3]+'...'
+        return render(request,'Taiwan_movie_all.html', {'res': res,'number_1':number_1,'description':description})
     else:
          csrf_token = csrf.get_token(request)
          form_action_url = reverse('Taiwan_movies_all')
