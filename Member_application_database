@@ -182,7 +182,7 @@
       // 檢查帳號
     $('#id_email').on('input', function(){
       let js_email = $(this).val();
-      let emailError = $('#email-check');
+      let emailError = $('#joininformation_check_email');
       let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
       // At least 1 uppercase, no special characters, min 8 characters
       if (!regex.test(js_email)) {
