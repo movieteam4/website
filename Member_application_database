@@ -7,23 +7,20 @@
     <div class="form-row">
 
       <div class="form-row">
-        <label for="id_account" class="account">會員帳號：</label>
-        <input type="account" name="account" required id="id_account">
+        <label for="id_email" class="email">電子信箱：</label>
+        <input type="id_email" name="email_address" id="id_email">
+        <span id="email-check" style="color:red;"></span>
       </div>
 
       <div class="form-row">
         <label for="id_password" class="required">會員密碼：</label>
         <input type="password" name="password" required id="id_password">
+        <span id="password-check" style="color:red;"></span>
       </div>
 
       <div class="form-row">
-          <label for="id_last_name" class="required">姓氏：</label>
-          <input type="text" name="last_name" maxlength="50" required id="id_last_name">
-      </div>
-
-      <div class="form-row">
-          <label for="id_first_name" class="required">名字：</label>
-          <input type="text" name="first_name" maxlength="50" required id="id_first_name">
+          <label for="id_name" class="required">名字：</label>
+          <input type="text" name="name" maxlength="50" required id="id_name">
       </div>
 
       <div class="form-row">
@@ -37,18 +34,28 @@
       </div>
 
       <div class="form-row">
-          <label for="id_email_address" class="required">電子郵件：</label>
-          <input type="email" name="email_address" maxlength="100" required id="id_email_address">
-      </div>
-
-      <div class="form-row">
           <label for="id_national_id" class="required">身分證字號：</label>
           <input type="text" name="national_id" maxlength="10" required id="id_national_id">
       </div>
 
       <div class="form-row">
           <label for="id_address">地址：</label>
-          <input type="text" name="address" maxlength="100" id="id_address">
+            <label for="city">所在縣市:</label>
+            <select id="city" name="city">
+                {%for c_name in list_city %}
+                    <option value={{c_name}}>{{c_name}}</option>
+                {% endfor%}
+                    <!-- 可以依需求增加更多縣市 -->
+            </select>
+            <label for="district">鄉鎮市區:</label>
+            <select id="district" name="district" disabled>
+              <option value="">請先選擇縣市</option>
+            </select>
+            <label for="road">路段:</label>
+            <select id="road" name="road" disabled>
+              <option value="">請先選擇區域</option>
+            </select>
+            <input type="address" name="address" maxlength="255" id="id_address">
       </div>
 
       <div class="form-row">
@@ -100,44 +107,44 @@
       <div class="form-row">
           <label for="id_household_income">年收入：</label>
           <select name="household_income" id="id_household_income">
-              <option value="four_ht">40萬以下</option>
-              <option value="six_ht">41萬~60萬</option>
-              <option value="eight_ht">61萬~80萬</option>
-              <option value="one_m">81萬~100萬</option>
-              <option value="two_m">100萬~200萬</option>
-              <option value="rich">200萬以上</option>
+              <option value="40萬以下">40萬以下</option>
+              <option value="41萬~60萬">41萬~60萬</option>
+              <option value="61萬~80萬">61萬~80萬</option>
+              <option value="81萬~100萬">81萬~100萬</option>
+              <option value="100萬~200萬">100萬~200萬</option>
+              <option value="200萬以上">200萬以上</option>
         </select>
       </div>
 
       <div class="form-row">
         <label for="id_favorite_genres">喜好電影類型：</label>
         <div id="favorite_genres">
-            <label><input type="checkbox" name="f_genres_1" value="Action"> 動作片 Action</label><br>
-            <label><input type="checkbox" name="f_genres_2" value="Adventure"> 冒險片 Adventure</label><br>
-            <label><input type="checkbox" name="f_genres_3" value="Animation"> 動畫片 Animation</label><br>
-            <label><input type="checkbox" name="f_genres_4" value="Art House"> 藝術片 Art House</label><br>
-            <label><input type="checkbox" name="f_genres_5" value="Comedy"> 喜劇片 Comedy</label><br>
-            <label><input type="checkbox" name="f_genres_6" value="Crime"> 犯罪片 Crime</label><br>
-            <label><input type="checkbox" name="f_genres_7" value="Documentary"> 紀錄片 Documentary</label><br>
-            <label><input type="checkbox" name="f_genres_8" value="Drama"> 劇情片 Drama</label><br>
-            <label><input type="checkbox" name="f_genres_9" value="Family"> 家庭片 Family</label><br>
-            <label><input type="checkbox" name="f_genres_10" value="Horror"> 恐怖片 Horror</label><br>
-            <label><input type="checkbox" name="f_genres_11" value="Children"> 兒童片 Children</label><br>
-            <label><input type="checkbox" name="f_genres_12" value="Kung Fu"> 功夫片 Kung Fu</label><br>
-            <label><input type="checkbox" name="f_genres_13" value="Musical"> 音樂劇 Musical</label><br>
-            <label><input type="checkbox" name="f_genres_14" value="Romance"> 文藝愛情片 Romance</label><br>
-            <label><input type="checkbox" name="f_genres_15" value="Science Fiction"> 科幻片 Science Fiction</label><br>
-            <label><input type="checkbox" name="f_genres_16" value="Thriller"> 驚悚懸疑片 Thriller</label><br>
+            <label><input type="checkbox" name="f_genres_1" value="動作片"> 動作片 Action</label><br>
+            <label><input type="checkbox" name="f_genres_2" value="冒險片"> 冒險片 Adventure</label><br>
+            <label><input type="checkbox" name="f_genres_3" value="動畫片"> 動畫片 Animation</label><br>
+            <label><input type="checkbox" name="f_genres_4" value="藝術片"> 藝術片 Art House</label><br>
+            <label><input type="checkbox" name="f_genres_5" value="喜劇片"> 喜劇片 Comedy</label><br>
+            <label><input type="checkbox" name="f_genres_6" value="犯罪片"> 犯罪片 Crime</label><br>
+            <label><input type="checkbox" name="f_genres_7" value="紀錄片"> 紀錄片 Documentary</label><br>
+            <label><input type="checkbox" name="f_genres_8" value="劇情片"> 劇情片 Drama</label><br>
+            <label><input type="checkbox" name="f_genres_9" value="家庭片"> 家庭片 Family</label><br>
+            <label><input type="checkbox" name="f_genres_10" value="恐怖片"> 恐怖片 Horror</label><br>
+            <label><input type="checkbox" name="f_genres_11" value="兒童片"> 兒童片 Children</label><br>
+            <label><input type="checkbox" name="f_genres_12" value="功夫片"> 功夫片 Kung Fu</label><br>
+            <label><input type="checkbox" name="f_genres_13" value="音樂劇"> 音樂劇 Musical</label><br>
+            <label><input type="checkbox" name="f_genres_14" value="文藝愛情片"> 文藝愛情片 Romance</label><br>
+            <label><input type="checkbox" name="f_genres_15" value="科幻片"> 科幻片 Science Fiction</label><br>
+            <label><input type="checkbox" name="f_genres_16" value="驚悚懸疑片"> 驚悚懸疑片 Thriller</label><br>
         </div>
       </div>
 
       <div class="form-row">
         <label for="id_preferences">喜好的座位：</label>
         <div id="preferences">
-          <label><input type="checkbox" name="seat_1" value="aisle"> 靠走道 aisle Seat</label><br>
-          <label><input type="checkbox" name="seat_2" value="back"> 後方 back</label><br>
-          <label><input type="checkbox" name="seat_3" value="front"> 前方 front</label><br>
-          <label><input type="checkbox" name="seat_4" value="middle"> 中間 middle</label><br>
+          <label><input type="checkbox" name="seat_1" value="靠走道"> 靠走道 aisle Seat</label><br>
+          <label><input type="checkbox" name="seat_2" value="後方"> 後方 back</label><br>
+          <label><input type="checkbox" name="seat_3" value="前方"> 前方 front</label><br>
+          <label><input type="checkbox" name="seat_4" value="中間"> 中間 middle</label><br>
         </div>
       </div>
 
@@ -146,20 +153,15 @@
       </div>
   </form>
 </div>
-
 {% comment %} 以下可以槓掉____________________________________________________________________________________________________________ {% endcomment %}
 資料狀態：{{res}}
 <br>
 {% if res == "OK" %}
-    {{idn}}<br>
-    {{pwn}}<br>
-    {{acc_num}}<br>
+    {{email_str}}<br>
     {{pw_num}}<br>
-    {{lst_str}}<br>
-    {{first_str}}<br>
+    {{name_str}}<br>
     {{birth_str}}<br>
     {{phone_num}}<br>
-    {{email_str}}<br>
     {{national_num}}<br>
     {{address_str}}<br>
     {{sex_str}}<br>
@@ -171,4 +173,95 @@
     {{l_f_genres}}<br>
     {{l_f_seat}}
 {% endif %}
+{% comment %} 以下可以槓掉____________________________________________________________________________________________________________ {% endcomment %}
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function(){
+      // 檢查帳號
+    $('#id_email').on('input', function(){
+      let js_email = $(this).val();
+      let emailError = $('#email-check');
+      let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+      // At least 1 uppercase, no special characters, min 8 characters
+      if (!regex.test(js_email)) {
+        emailError.text('請輸入一個包含"@"的電子信箱');
+      } else {
+      // 發送 AJAX 請求檢查帳號
+        $.ajax({
+          url: '{% url "check_email" %}',  // Django URL
+          method: 'GET',
+          data: { 'vi_email': js_email },  // 傳送帳號
+          success: function(response){
+              if (response.js_email_exists) {
+                emailError.text('這個信箱已經被使用');
+              } else {
+                emailError.text('歡迎使用');
+              }
+            }
+          });
+          }
+      });
+
+    // Password Validation (at least 1 uppercase, min 8 characters)
+    $('#id_password').on('input', function() {
+      let password = $(this).val();
+      let passwordError = $('#password-check');
+      let regex = /^(?=.*[A-Z])[A-Za-z0-9]{8,}$/;  // At least 1 uppercase, no special characters, min 8 characters
+      if (!regex.test(password)) {
+          passwordError.text('密碼包含至少一個大寫字母且長度至少8個字，且無特殊符號');
+      } else {
+          passwordError.text('可以使用');
+      }
+  });
+
+
+    // 定義不同城市和區域的資料
+    var districtsByCity = {{dict_town|safe}}; // 載入市區字典
+    var roadsByDistrict ={{ dict_road|safe}}; // 載入路段字典
+
+    // 當選擇城市時，更新區域選單
+    $('#city').change(function() {
+      var city = $(this).val();
+      var districtSelect = $('#district');
+      var roadSelect = $('#road');
+      districtSelect.empty(); // 清空區域選單
+      roadSelect.empty();     // 清空路段選單
+      districtSelect.append('<option value="">請選擇區域</option>');
+      roadSelect.append('<option value="">請先選擇區域</option>');
+
+      if (city !== '') {
+        districtSelect.prop('disabled', false);
+        // 根據選擇的城市加載對應的區域選項
+        var districts = districtsByCity[city];
+        $.each(districts, function(index, district) {
+          districtSelect.append('<option value="' + district + '">' + district + '</option>');
+        });
+      } else {
+        districtSelect.prop('disabled', true);
+        roadSelect.prop('disabled', true);
+      }
+    });
+      // 當選擇區域時，更新路段選單
+      $('#district').change(function() {
+        var district = $(this).val();
+        var roadSelect = $('#road');
+        roadSelect.empty(); // 清空路段選單
+        roadSelect.append('<option value="">請選擇路段</option>');
+
+        if (district !== '') {
+          roadSelect.prop('disabled', false);
+          // 根據選擇的區域加載對應的路段選項
+          var roads = roadsByDistrict[district];
+          $.each(roads, function(index, road) {
+            roadSelect.append('<option value="' + road + '">' + road + '</option>');
+          });
+        } else {
+          roadSelect.prop('disabled', true);
+        }
+      });
+
+  });
+</script>
 
